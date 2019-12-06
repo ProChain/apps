@@ -144,13 +144,14 @@ class Account extends React.PureComponent<Props, State> {
     return (
       <AddressCard
         buttons={this.renderButtons()}
+        className={className}
         iconInfo={onlineStatus && (
           <OnlineStatus
             isTooltip
             value={onlineStatus}
           />
         )}
-        label={t('stash')}
+        // label={t('stash')}
         type='account'
         value={stashId}
         withAddressOrName
@@ -177,15 +178,16 @@ class Account extends React.PureComponent<Props, State> {
         {this.renderSetRewardDestination()}
         {this.renderSetSessionAccount()}
         {this.renderValidate()}
-        <div className={className}>
+        <div className='staking--Card'>
           <div className='staking--Accounts'>
             {controllerId && (
               <div className='staking--Account-detail actions'>
                 <AddressRow
-                  label={t('controller')}
+                  // label={t('controller')}
                   value={controllerId}
                   withAddressOrName
                   withBalance={CONTROLLER_BALANCES}
+                  withSmallIcon
                 />
               </div>
             )}
@@ -222,21 +224,21 @@ class Account extends React.PureComponent<Props, State> {
                 withValidatorPrefs={isStashValidating}
               />
             </div>
-            {nominees && !!nominees.length && (
-              <div className='staking--Account-Nominee'>
-                <label className='staking--label'>{t('nominating')}</label>
-                {nominees.map((nomineeId, index): React.ReactNode => (
-                  <AddressMini
-                    key={index}
-                    value={nomineeId}
-                    withBalance={false}
-                    withBonded
-                  />
-                ))}
-              </div>
-            )}
           </div>
         </div>
+        {nominees && !!nominees.length && (
+          <details className='staking--Account-Nominations'>
+            <summary>{t('Nominating {{count}}', { replace: { count: nominees.length } })}</summary>
+            {nominees.map((nomineeId, index): React.ReactNode => (
+              <AddressMini
+                key={index}
+                value={nomineeId}
+                withBalance={false}
+                withBonded
+              />
+            ))}
+          </details>
+        )}
       </AddressCard>
     );
   }
@@ -364,11 +366,11 @@ class Account extends React.PureComponent<Props, State> {
 
   private renderPopupMenu (): React.ReactNode {
     const { balances_all, isOwnStash, isSubstrateV2, t } = this.props;
-    const { hexSessionIdNext, isStashNominating, isStashValidating, sessionIds } = this.state;
+    const { isStashNominating, isStashValidating } = this.state;
 
     // only show a "Bond Additional" button if this stash account actually doesn't bond everything already
     // staking_ledger.total gives the total amount that can be slashed (any active amount + what is being unlocked)
-    const canBondExtra = balances_all && balances_all.freeBalance.gtn(0);
+    const canBondExtra = balances_all?.freeBalance.gtn(0);
 
     return (
       <Menu
@@ -401,7 +403,7 @@ class Account extends React.PureComponent<Props, State> {
             {t('Change validator preferences')}
           </Menu.Item>
         }
-        {!isStashNominating && (!!sessionIds.length || (isSubstrateV2 && hexSessionIdNext !== '0x')) &&
+        {!isStashNominating &&
           <Menu.Item onClick={this.toggleSetSessionAccount}>
             {isSubstrateV2 ? t('Change session keys') : t('Change session account')}
           </Menu.Item>
@@ -549,7 +551,9 @@ class Account extends React.PureComponent<Props, State> {
 
 export default withMulti(
   styled(Account as React.ComponentClass<Props>)`
-    display: flex;
+    .staking--Card {
+      display: flex;
+    }
 
     .staking--Accounts {
       flex: 3;
@@ -573,7 +577,7 @@ export default withMulti(
       }
 
       .staking--label {
-        margin: 0 1.75rem -0.75rem 0;
+        margin: 0 0 -0.75rem 1.75rem;
       }
     }
 
@@ -581,6 +585,7 @@ export default withMulti(
       flex: 1;
       display: flex;
       flex-direction: column;
+      margin-top: -2.25rem;
 
       .staking--balances {
         div {
@@ -591,22 +596,10 @@ export default withMulti(
           flex:0;
         }
       }
-
-      .staking--Account-Nominee {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        padding-top: 1em;
-        flex: 1;
-      }
     }
 
-    .staking--Account-Nominee {
-      text-align: right;
-
-      .staking--label {
-        margin: 0 2.25rem -.75rem 0;
-      }
+    .staking--Account-Nominations {
+      margin-top: 1em;
     }
 
     .ui--Row-buttons .ui--Button-Group {

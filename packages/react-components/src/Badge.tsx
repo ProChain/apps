@@ -9,28 +9,21 @@ import Tooltip from './Tooltip';
 
 interface Props {
   className?: string;
-  hover: React.ReactNode;
+  hover?: React.ReactNode;
   info: React.ReactNode;
+  isInline?: boolean;
   isTooltip?: boolean;
-  type: 'online' | 'offline' | 'next' | 'runnerup' | 'selected';
+  type: 'counter' | 'online' | 'offline' | 'next' | 'runnerup' | 'selected';
 }
 
 let badgeId = 0;
 
-function Badge ({ className, hover, info, isTooltip, type }: Props): React.ReactElement<Props> | null {
+function Badge ({ className, hover, info, isInline, isTooltip, type }: Props): React.ReactElement<Props> | null {
   const [key] = useState(`${Date.now()}-${badgeId++}`);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const _toggleOpen = (): void => setIsOpen(!isOpen);
 
   return (
     <div
-      className={`ui--Badge ${isOpen && 'expand'} ${isTooltip && 'tooltip'} ${type} ${className}`}
-      onClick={
-        isTooltip
-          ? _toggleOpen
-          : undefined
-      }
+      className={`ui--Badge ${isInline && 'isInline'} ${isTooltip && 'isTooltip'} ${type} ${className}`}
       data-for={`badge-status-${key}`}
       data-tip={true}
       data-tip-disable={!isTooltip}
@@ -41,10 +34,12 @@ function Badge ({ className, hover, info, isTooltip, type }: Props): React.React
       <div className='detail'>
         {hover}
       </div>
-      <Tooltip
-        trigger={`badge-status-${key}`}
-        text={hover}
-      />
+      {hover && (
+        <Tooltip
+          trigger={`badge-status-${key}`}
+          text={hover}
+        />
+      )}
     </div>
   );
 }
@@ -54,21 +49,35 @@ export default styled(Badge)`
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   color: #eee;
   cursor: help;
-  display: flex;
   font-size: 12px;
   height: 22px;
-  justify-content: center;
-  margin-bottom: 0.25rem;
   padding: 0 4px;
   text-align: center;
   width: 22px;
+
+  &:not(.isInline) {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.25rem;
+  }
+
+  &.isInline {
+    display: inline-block;
+    margin-right: 0.25rem;
+  }
 
   &.next {
     background: steelblue;
   }
 
-  &.offline {
+  &.offline,
+  &.counter {
     background: red;
+  }
+
+  &.counter {
+    margin: 0 0.5rem;
+    vertical-align: middle;
   }
 
   &.runnerup {
@@ -92,6 +101,7 @@ export default styled(Badge)`
   }
 
   .detail {
+    height: 0;
     width: 0;
   }
 
