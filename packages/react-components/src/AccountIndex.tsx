@@ -1,4 +1,4 @@
-// Copyright 2017-2019 @polkadot/react-query authors & contributors
+// Copyright 2017-2019 @polkadot/react-components authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
@@ -7,18 +7,19 @@ import { DeriveAccountInfo } from '@polkadot/api-derive/types';
 import { BareProps } from '@polkadot/react-api/types';
 
 import React, { useState, useEffect } from 'react';
-import { useApi, useStream } from '@polkadot/react-hooks';
+import styled from 'styled-components';
+import { useApi, useCall } from '@polkadot/react-hooks';
 
 interface Props extends BareProps {
   children?: React.ReactNode;
   defaultValue?: string;
   label?: React.ReactNode;
-  params?: string | AccountId | Address | null;
+  value?: string | AccountId | Address | null | Uint8Array;
 }
 
-export default function AccountIndexDisplay ({ children, className, defaultValue = '-', label = '', params, style }: Props): React.ReactElement<Props> {
+function AccountIndex ({ children, className, defaultValue, label, style, value }: Props): React.ReactElement<Props> {
   const { api } = useApi();
-  const info = useStream<DeriveAccountInfo>(api.derive.accounts.info as any, [params]);
+  const info = useCall<DeriveAccountInfo>(api.derive.accounts.info as any, [value]);
   const [accountIndex, setAccountIndex] = useState<string | null>(null);
 
   useEffect((): void => {
@@ -31,10 +32,16 @@ export default function AccountIndexDisplay ({ children, className, defaultValue
 
   return (
     <div
-      className={className}
+      className={`ui--AccountIndex ${className}`}
       style={style}
     >
-      {label}{accountIndex || defaultValue}{children}
+      {label || ''}<div className='account-index'>{accountIndex || defaultValue || '-'}</div>{children}
     </div>
   );
 }
+
+export default styled(AccountIndex)`
+  .account-index {
+    font-family: monospace;
+  }
+`;
