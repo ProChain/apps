@@ -4,13 +4,13 @@
 
 import React from 'react';
 
-import Button from './Button';
 import Modal from './Modal';
 import TxButton from './TxButton';
 import { useTranslation } from './translate';
 
 interface Props {
   accountId: string | null;
+  aye: boolean;
   className?: string;
   isDisabled?: boolean;
   onClick: () => void;
@@ -18,30 +18,28 @@ interface Props {
   tx: string;
 }
 
-export default function VoteActions ({ accountId, className, isDisabled, onClick, params, tx }: Props): React.ReactElement<Props> {
+function VoteActions ({ accountId, aye, className, isDisabled, onClick, params, tx }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
 
   return (
-    <Modal.Actions>
-      <Button.Group className={className}>
-        <Button
-          icon='cancel'
-          isNegative
-          label={t('Cancel')}
-          onClick={onClick}
-        />
-        <Button.Or />
-        <TxButton
-          accountId={accountId}
-          icon='check'
-          isDisabled={!accountId || isDisabled}
-          isPrimary
-          label={t('Vote')}
-          onClick={onClick}
-          params={params}
-          tx={tx}
-        />
-      </Button.Group>
+    <Modal.Actions
+      className={className}
+      onCancel={onClick}
+    >
+      <TxButton
+        accountId={accountId}
+        icon='check'
+        isDisabled={!accountId || isDisabled}
+        isPrimary
+        label={aye
+          ? t('Vote Aye')
+          : t('Vote Nay')}
+        onStart={onClick}
+        params={params}
+        tx={tx}
+      />
     </Modal.Actions>
   );
 }
+
+export default React.memo(VoteActions);

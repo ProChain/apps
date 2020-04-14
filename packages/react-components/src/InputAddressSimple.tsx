@@ -4,7 +4,7 @@
 
 import { BareProps } from './types';
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 import addressToAddress from './util/toAddress';
@@ -15,22 +15,26 @@ interface Props extends BareProps {
   children?: React.ReactNode;
   defaultValue?: string | null;
   help?: React.ReactNode;
+  isFull?: boolean;
   label?: React.ReactNode;
   onChange?: (address: string | null) => void;
   onEnter?: () => void;
   onEscape?: () => void;
 }
 
-function InputAddressSimple ({ children, className, defaultValue, help, label, onChange, onEnter, onEscape }: Props): React.ReactElement<Props> {
+function InputAddressSimple ({ children, className, defaultValue, help, isFull, label, onChange, onEnter, onEscape }: Props): React.ReactElement<Props> {
   const [address, setAddress] = useState<string | null>(defaultValue || null);
 
-  const _onChange = (_address: string): void => {
-    const address = addressToAddress(_address) || null;
+  const _onChange = useCallback(
+    (_address: string): void => {
+      const address = addressToAddress(_address) || null;
 
-    setAddress(address);
+      setAddress(address);
 
-    onChange && onChange(address);
-  };
+      onChange && onChange(address);
+    },
+    [onChange]
+  );
 
   return (
     <div className={className}>
@@ -38,6 +42,7 @@ function InputAddressSimple ({ children, className, defaultValue, help, label, o
         defaultValue={defaultValue}
         help={help}
         isError={!address}
+        isFull={isFull}
         label={label}
         onChange={_onChange}
         onEnter={onEnter}
@@ -54,7 +59,7 @@ function InputAddressSimple ({ children, className, defaultValue, help, label, o
   );
 }
 
-export default styled(InputAddressSimple)`
+export default React.memo(styled(InputAddressSimple)`
   position: relative;
 
   .ui--InputAddressSimpleIcon {
@@ -65,4 +70,4 @@ export default styled(InputAddressSimple)`
     position: absolute;
     top: 1rem;
   }
-`;
+`);

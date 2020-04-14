@@ -5,6 +5,7 @@
 import { Props as BareProps, RawParam } from '../types';
 
 import React from 'react';
+import styled from 'styled-components';
 import { Static } from '@polkadot/react-components';
 
 import { useTranslation } from '../translate';
@@ -12,13 +13,18 @@ import Bare from './Bare';
 
 interface Props extends BareProps {
   asHex?: boolean;
+  children?: React.ReactNode;
   defaultValue: RawParam;
   withLabel?: boolean;
 }
 
-export default function StaticParam ({ asHex, className, defaultValue, label, style }: Props): React.ReactElement<Props> {
+function StaticParam ({ asHex, children, className, defaultValue, label, style }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
-  const value = defaultValue && defaultValue.value && defaultValue.value[asHex ? 'toHex' : 'toString']();
+  const value = defaultValue && defaultValue.value && (
+    asHex
+      ? defaultValue.value.toHex()
+      : JSON.stringify(defaultValue.value.toHuman(), null, 2).replace(/"/g, '')
+  );
 
   return (
     <Bare
@@ -28,8 +34,17 @@ export default function StaticParam ({ asHex, className, defaultValue, label, st
       <Static
         className='full'
         label={label}
-        value={value || t('<empty>')}
+        value={<pre>{value || t('<empty>')}</pre>}
       />
+      {children}
     </Bare>
   );
 }
+
+export default React.memo(styled(StaticParam)`
+  pre {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+`);

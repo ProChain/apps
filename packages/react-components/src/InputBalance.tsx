@@ -17,6 +17,7 @@ interface Props extends BareProps {
   help?: React.ReactNode;
   isDisabled?: boolean;
   isError?: boolean;
+  isFull?: boolean;
   isZeroable?: boolean;
   label?: React.ReactNode;
   labelExtra?: React.ReactNode;
@@ -33,7 +34,7 @@ interface Props extends BareProps {
 
 const DEFAULT_BITLENGTH = BitLengthOption.CHAIN_SPEC as BitLength;
 
-function InputBalance ({ autoFocus, className, defaultValue: inDefault, help, isDisabled, isError, isZeroable, label, labelExtra, maxValue, onChange, onEnter, onEscape, placeholder, style, value, withEllipsis, withLabel, withMax }: Props): React.ReactElement<Props> {
+function InputBalance ({ autoFocus, className, defaultValue: inDefault, help, isDisabled, isError, isFull, isZeroable, label, labelExtra, maxValue, onChange, onEnter, onEscape, placeholder, style, value, withEllipsis, withLabel, withMax }: Props): React.ReactElement<Props> {
   const defaultValue = inDefault
     ? formatBalance(inDefault, { forceUnit: '-', withSi: false }).replace(',', isDisabled ? ',' : '')
     : inDefault;
@@ -41,14 +42,15 @@ function InputBalance ({ autoFocus, className, defaultValue: inDefault, help, is
   return (
     <InputNumber
       autoFocus={autoFocus}
-      className={`ui--InputBalance ${className}`}
       bitLength={DEFAULT_BITLENGTH}
+      className={`ui--InputBalance ${className}`}
       defaultValue={defaultValue}
       help={help}
       isDisabled={isDisabled}
       isError={isError}
-      isZeroable={isZeroable}
+      isFull={isFull}
       isSi
+      isZeroable={isZeroable}
       label={label}
       labelExtra={labelExtra}
       maxValue={maxValue}
@@ -65,7 +67,7 @@ function InputBalance ({ autoFocus, className, defaultValue: inDefault, help, is
   );
 }
 
-export default styled(InputBalance)`
+export default React.memo(styled(InputBalance)`
   &&:not(.label-small) .labelExtra {
     right: 6.5rem;
   }
@@ -74,4 +76,4 @@ export default styled(InputBalance)`
     border-style: solid;
     opacity: 1 !important;
   }
-`;
+`);

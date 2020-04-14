@@ -11,7 +11,9 @@ import styled from 'styled-components';
 
 import { classes } from './util';
 
-const rootElement = document.getElementById('tooltips');
+const rootElement = typeof document === 'undefined'
+  ? null // This hack is required for server side rendering
+  : document.getElementById('tooltips');
 
 interface Props extends BareProps {
   dataFor?: string;
@@ -27,36 +29,41 @@ interface Props extends BareProps {
   trigger: string;
 }
 
-function Tooltip ({ className, effect = 'solid', offset, place = 'bottom', text, trigger }: Props): React.ReactElement<Props> | null {
-  const [tooltipContainer] = useState(document.createElement('div'));
+function Tooltip ({ className, effect = 'solid', offset, place = 'top', text, trigger }: Props): React.ReactElement<Props> | null {
+  const [tooltipContainer] = useState(
+    typeof document === 'undefined'
+      ? {} as HTMLElement // This hack is required for server side rendering
+      : document.createElement('div')
+  );
 
   useEffect((): () => void => {
-    if (rootElement !== null) {
-      rootElement.appendChild(tooltipContainer);
-    }
+    rootElement && rootElement.appendChild(tooltipContainer);
 
     return (): void => {
-      if (rootElement !== null) {
-        rootElement.removeChild(tooltipContainer);
-      }
+      rootElement && rootElement.removeChild(tooltipContainer);
     };
-  }, []);
+  }, [tooltipContainer]);
 
   return ReactDOM.createPortal(
     <ReactTooltip
-      id={trigger}
+      className={classes('ui--Tooltip', className)}
       effect={effect}
+      id={trigger}
       offset={offset}
       place={place}
-      className={classes('ui--Tooltip', className)}
     >
-      {text}
+      {className?.includes('address') ? <div>{text}</div> : text}
     </ReactTooltip>,
     tooltipContainer
   );
 }
 
-export default styled(Tooltip)`
+export default React.memo(styled(Tooltip)`
+  &.address div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   table {
     border: 0;
 
@@ -76,4 +83,18 @@ export default styled(Tooltip)`
   table+div {
     margin-top: 0.75rem;
   }
-`;
+
+  .faded {
+    margin-top: -0.25rem;
+    opacity: 0.75 !important;
+    font-size: 0.75em !important;
+  }
+
+  .faded+.faded {
+    margin-top: -0.5rem;
+  }
+
+  .row+.row {
+    margin-top: 0.5rem;
+  }
+`);

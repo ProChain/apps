@@ -3,8 +3,9 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React from 'react';
+import styled from 'styled-components';
 
-import Dropdown from './Dropdown';
+import Toggle from './Toggle';
 import { useTranslation } from './translate';
 
 interface Props {
@@ -13,20 +14,23 @@ interface Props {
   value: boolean;
 }
 
-export default function VoteToggle ({ className, onChange, value }: Props): React.ReactElement<Props> {
+function VoteToggle ({ className, onChange, value }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
 
   return (
-    <Dropdown
-      className={className}
-      help={t('Select your vote preferences for this proposal, either to approve or disapprove')}
-      label={t('record my vote as')}
-      options={[
-        { text: t('Aye, I approve'), value: true },
-        { text: t('Nay, I do not approve'), value: false }
-      ]}
+    <Toggle
+      className={`${className}`}
+      label={value
+        ? t('Aye, I approve')
+        : t('Nay, I do not approve')
+      }
       onChange={onChange}
       value={value}
     />
   );
 }
+
+export default React.memo(styled(VoteToggle)`
+  margin: 0.5rem;
+  text-align: right;
+`);
