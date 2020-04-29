@@ -75,6 +75,10 @@ export default React.memo(styled(Body)`
       padding: 0.85rem 1rem;
     }
 
+    &.badge {
+      padding: 0;
+    }
+
     &.button {
       text-align: right;
       white-space: nowrap;
@@ -119,8 +123,11 @@ export default React.memo(styled(Body)`
     }
 
     &.mini {
+      max-width: 4rem;
+      min-width: 4rem;
       padding: 0 0.75rem 0 0;
-      white-space: nowrap;
+      width: 4rem;
+      white-space: normal;
     }
 
     &.favorite i.icon.isSelected {
