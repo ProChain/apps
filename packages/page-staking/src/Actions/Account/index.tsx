@@ -7,15 +7,15 @@ import { EraIndex } from '@polkadot/types/interfaces';
 import { StakerState } from '@polkadot/react-hooks/types';
 import { SortedTargets } from '../../types';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { AddressInfo, AddressMini, AddressSmall, Button, Expander, Menu, Popup, StakingBonded, StakingRedeemable, StakingUnbonding, TxButton } from '@polkadot/react-components';
+import { AddressInfo, AddressMini, AddressSmall, Button, Menu, Popup, StakingBonded, StakingRedeemable, StakingUnbonding, TxButton } from '@polkadot/react-components';
 import { useApi, useCall, useToggle } from '@polkadot/react-hooks';
 
 import { useTranslation } from '../../translate';
-import useInactives from '../useInactives';
 import BondExtra from './BondExtra';
 import InjectKeys from './InjectKeys';
+import ListNominees from './ListNominees';
 import Nominate from './Nominate';
 import SetControllerAccount from './SetControllerAccount';
 import SetRewardDestination from './SetRewardDestination';
@@ -39,8 +39,6 @@ function Account ({ className, info: { controllerId, destination, destinationId,
   const { api } = useApi();
   const balancesAll = useCall<DeriveBalancesAll>(api.derive.balances.all, [stashId]);
   const stakingAccount = useCall<DeriveStakingAccount>(api.derive.staking.account, [stashId]);
-  const [activeNoms, setActiveNoms] = useState<string[]>([]);
-  const inactiveNoms = useInactives(stashId, nominating);
   const [isBondExtraOpen, toggleBondExtra] = useToggle();
   const [isInjectOpen, toggleInject] = useToggle();
   const [isNominateOpen, toggleNominate] = useToggle();
@@ -50,12 +48,6 @@ function Account ({ className, info: { controllerId, destination, destinationId,
   const [isSettingsOpen, toggleSettings] = useToggle();
   const [isUnbondOpen, toggleUnbond] = useToggle();
   const [isValidateOpen, toggleValidate] = useToggle();
-
-  useEffect((): void => {
-    nominating && setActiveNoms(
-      nominating.filter((id): boolean => !inactiveNoms.includes(id))
-    );
-  }, [inactiveNoms, nominating]);
 
   return (
     <tr className={className}>
@@ -73,7 +65,6 @@ function Account ({ className, info: { controllerId, destination, destinationId,
         {isNominateOpen && controllerId && (
           <Nominate
             controllerId={controllerId}
-            isOpen={isNominateOpen}
             next={next}
             nominating={nominating}
             onClose={toggleNominate}
@@ -94,12 +85,14 @@ function Account ({ className, info: { controllerId, destination, destinationId,
             controllerId={controllerId}
             defaultDestination={destinationId}
             onClose={toggleRewardDestination}
+            stashId={stashId}
           />
         )}
         {isSetSessionOpen && controllerId && (
           <SetSessionKey
             controllerId={controllerId}
             onClose={toggleSetSession}
+            stashId={stashId}
           />
         )}
         {isUnbondOpen && (
@@ -121,7 +114,7 @@ function Account ({ className, info: { controllerId, destination, destinationId,
       <td className='address'>
         <AddressMini value={controllerId} />
       </td>
-      <td className='number'>{destination}</td>
+      <td className='number ui--media-1200'>{destination}</td>
       <td className='number'>
         <StakingBonded stakingInfo={stakingAccount} />
         <StakingUnbonding stakingInfo={stakingAccount} />
@@ -141,32 +134,10 @@ function Account ({ className, info: { controllerId, destination, destinationId,
         : (
           <td className='all'>
             {isStashNominating && (
-              <>
-                {activeNoms.length !== 0 && (
-                  <Expander summary={t('Active nominations ({{count}})', { replace: { count: activeNoms.length } })}>
-                    {activeNoms.map((nomineeId, index): React.ReactNode => (
-                      <AddressMini
-                        key={index}
-                        value={nomineeId}
-                        withBalance={false}
-                        withBonded
-                      />
-                    ))}
-                  </Expander>
-                )}
-                {inactiveNoms.length !== 0 && (
-                  <Expander summary={t('Inactive nominations ({{count}})', { replace: { count: inactiveNoms.length } })}>
-                    {inactiveNoms.map((nomineeId, index): React.ReactNode => (
-                      <AddressMini
-                        key={index}
-                        value={nomineeId}
-                        withBalance={false}
-                        withBonded
-                      />
-                    ))}
-                  </Expander>
-                )}
-              </>
+              <ListNominees
+                nominating={nominating}
+                stashId={stashId}
+              />
             )}
           </td>
         )
@@ -210,7 +181,6 @@ function Account ({ className, info: { controllerId, destination, destinationId,
                         />
                       )
                     }
-                    <Button.Or key='nominate.or' />
                     <Button
                       icon='hand paper outline'
                       isDisabled={!isOwnController || isDisabled}
@@ -227,7 +197,7 @@ function Account ({ className, info: { controllerId, destination, destinationId,
                 onClose={toggleSettings}
                 trigger={
                   <Button
-                    icon='setting'
+                    icon='ellipsis vertical'
                     isDisabled={isDisabled}
                     onClick={toggleSettings}
                   />

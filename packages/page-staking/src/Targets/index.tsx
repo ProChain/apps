@@ -92,12 +92,12 @@ function Targets ({ className, ownStashes, targets: { calcWith, lastReward, nomi
     [t('validators'), 'start', 4],
     ...['rankComm', 'rankBondTotal', 'rankBondOwn', 'rankBondOther', 'rankOverall'].map((header) => [
       <>{labels[header]}<Icon name={sortBy === header ? (sortFromMax ? 'chevron down' : 'chevron up') : 'minus'} /></>,
-      `isClickable ${sortBy === header && 'ui--highlight--border'} number`,
+      sorted ? `isClickable ${sortBy === header && 'ui--highlight--border'} number` : 'number',
       1,
       (): void => _sort(header as 'rankComm')
     ]),
     []
-  ], [_sort, labels, sortBy, sortFromMax, t]);
+  ], [_sort, labels, sortBy, sorted, sortFromMax, t]);
 
   const filter = useMemo(() => (
     sorted && (
@@ -127,7 +127,6 @@ function Targets ({ className, ownStashes, targets: { calcWith, lastReward, nomi
           label={t('Select best')}
           onClick={_selectProfitable}
         />
-        <Button.Or />
         <Nominate
           ownNominators={ownNominators}
           targets={selected}

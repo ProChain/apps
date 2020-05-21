@@ -8,7 +8,7 @@
 
 A Portal into the Polkadot and Substrate networks. Provides a view and interaction layer from a browser.
 
-This can be accessed as a hosted application via [https://polkadot.js.org/apps/](https://polkadot.js.org/apps/) to explorer any of the supported Polkadot and Substrate chains
+This can be accessed as a hosted application via [https://polkadot.js.org/apps/](https://polkadot.js.org/apps/) or you can access the [IPFS hosted version](https://polkadot.js.org/apps/ipfs) to explore any of the supported Polkadot and Substrate chains
 
 **Important** If you are a chain developer and would like to add support for your chain to the UI, all the local configuration (API types, settings, logos) can be customized in [the apps-config package](packages/apps-config#README.md), complete with instructions of what goes where.
 
@@ -17,6 +17,7 @@ This can be accessed as a hosted application via [https://polkadot.js.org/apps/]
 The repo is split into a number of packages, each representing an application. These are -
 
 - [apps](packages/apps/) This is the main entry point. It handles the selection sidebar and routing to the specific application being displayed.
+- [apps-electron](packages/apps-electron/) Desktop app running [apps](packages/apps/).
 - [page-accounts](packages/page-accounts/) A basic account management app.
 - [page-address-book](packages/page-address-book/) A basic address management app.
 - [page-democracy](packages/page-democracy/) A basic voting app, allowing votes on activate proposals and referenda.

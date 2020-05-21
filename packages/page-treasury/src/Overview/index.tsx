@@ -42,7 +42,6 @@ function Overview ({ className }: Props): React.ReactElement<Props> {
       />
       <Button.Group>
         <ProposalCreate />
-        <Button.Or />
         <TipCreate
           members={members}
           refresh={triggerHashes}
@@ -50,11 +49,13 @@ function Overview ({ className }: Props): React.ReactElement<Props> {
       </Button.Group>
       <Proposals
         isMember={isMember}
+        members={members}
         proposals={info?.proposals}
       />
       <Proposals
         isApprovals
         isMember={isMember}
+        members={members}
         proposals={info?.approvals}
       />
       <Tips

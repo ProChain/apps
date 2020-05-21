@@ -73,10 +73,17 @@ function Voting ({ proposal, referendumId }: Props): React.ReactElement<Props> |
           size='large'
         >
           <Modal.Content>
-            <ProposedAction
-              idNumber={referendumId}
-              proposal={proposal}
-            />
+            <Modal.Columns>
+              <Modal.Column>
+                <ProposedAction
+                  idNumber={referendumId}
+                  proposal={proposal}
+                />
+              </Modal.Column>
+              <Modal.Column>
+                <p>{t('If this proposal is passed, the changes will be applied via dispatch and the deposit returned.')}</p>
+              </Modal.Column>
+            </Modal.Columns>
             <Modal.Columns>
               <Modal.Column>
                 <VoteAccount onChange={setAccountId} />
@@ -103,7 +110,7 @@ function Voting ({ proposal, referendumId }: Props): React.ReactElement<Props> |
                 />
               </Modal.Column>
               <Modal.Column>
-                <p>{t('The balance associated with the vote will be locked as per the conviction specified nd will not be available for transfer or spend during this period.')}</p>
+                <p>{t('The balance associated with the vote will be locked as per the conviction specified and will not be available for transfer during this period.')}</p>
                 <p>{t('Conviction locks do overlap and is additive, meaning that funds locked during a previous vote can be locked again.')}</p>
               </Modal.Column>
             </Modal.Columns>

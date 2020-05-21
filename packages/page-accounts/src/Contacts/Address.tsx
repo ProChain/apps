@@ -8,11 +8,12 @@ import { ActionStatus } from '@polkadot/react-components/Status/types';
 
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { AddressSmall, AddressInfo, Button, ChainLock, Icon, LinkExternal, Forget, Menu, Popup, Tag, Transfer } from '@polkadot/react-components';
+import { AddressSmall, AddressInfo, Button, ChainLock, Icon, LinkExternal, Forget, Menu, Popup, Tag } from '@polkadot/react-components';
 import { useApi, useCall } from '@polkadot/react-hooks';
 import keyring from '@polkadot/ui-keyring';
 import { formatNumber } from '@polkadot/util';
 
+import Transfer from '../Accounts/modals/Transfer';
 import { useTranslation } from '../translate';
 
 interface Props {
@@ -187,7 +188,7 @@ function Address ({ address, className, filter, isFavorite, toggleFavorite }: Pr
           ))}
         </div>
       </td>
-      <td className='number'>
+      <td className='number ui--media-1500'>
         {balancesAll && formatNumber(balancesAll.accountNonce)}
       </td>
       <td className='number'>
@@ -204,7 +205,6 @@ function Address ({ address, className, filter, isFavorite, toggleFavorite }: Pr
           key='deposit'
           label={t('deposit')}
           onClick={_toggleTransfer}
-          size='small'
           tooltip={t('Send funds to this address')}
         />
         <Popup
@@ -213,9 +213,8 @@ function Address ({ address, className, filter, isFavorite, toggleFavorite }: Pr
           onClose={_toggleSettingPopup}
           trigger={
             <Button
-              icon='setting'
+              icon='ellipsis vertical'
               onClick={_toggleSettingPopup}
-              size='small'
             />
           }
         >
@@ -244,7 +243,7 @@ function Address ({ address, className, filter, isFavorite, toggleFavorite }: Pr
           </Menu>
         </Popup>
       </td>
-      <td className='mini'>
+      <td className='mini ui--media-1400'>
         <LinkExternal
           className='ui--AddressCard-exporer-link'
           data={address}

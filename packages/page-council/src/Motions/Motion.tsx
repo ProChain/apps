@@ -56,7 +56,8 @@ function Motion ({ className, isMember, members, motion: { hash, proposal, votes
       <Votes votes={nays} />
       <td className='button'>
         {bestNumber && (
-          end.gt(bestNumber)
+          // end may not be existing (older versions)
+          !end || end.gt(bestNumber)
             ? (
               <Voting
                 hash={hash}
@@ -71,6 +72,8 @@ function Motion ({ className, isMember, members, motion: { hash, proposal, votes
               <Close
                 hash={hash}
                 idNumber={index}
+                isDisabled={!isMember}
+                members={members}
                 proposal={proposal}
               />
             )

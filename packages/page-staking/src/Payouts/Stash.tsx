@@ -9,7 +9,7 @@ import { PayoutStash } from './types';
 import BN from 'bn.js';
 import React, { useEffect, useState } from 'react';
 import ApiPromise from '@polkadot/api/promise';
-import { AddressMini, Badge, TxButton } from '@polkadot/react-components';
+import { AddressMini, TxButton } from '@polkadot/react-components';
 import { useApi, useCall } from '@polkadot/react-hooks';
 import { BlockToTime, FormatBalance } from '@polkadot/react-query';
 
@@ -25,7 +25,7 @@ interface Props {
 }
 
 interface EraInfo {
-  eraStr: string;
+  eraStr: React.ReactNode;
   oldestEra?: BN;
 }
 
@@ -63,7 +63,7 @@ function Stash ({ className, isDisabled, payout: { available, rewards, stashId }
       const available = rewards.filter(({ era }) => era.lt(stakerPayoutsAfter));
 
       setExtrinsic(
-        available.length
+        api.tx.utility && available.length
           ? createPrevPayout(api, available)
           : null
       );
@@ -78,11 +78,6 @@ function Stash ({ className, isDisabled, payout: { available, rewards, stashId }
     <tr className={className}>
       <td className='address'><AddressMini value={stashId} /></td>
       <td className='start'>
-        <Badge
-          info={rewards.length}
-          isInline
-          type='counter'
-        />
         <span className='payout-eras'>{eraStr}</span>
       </td>
       <td className='number'><FormatBalance value={available} /></td>
