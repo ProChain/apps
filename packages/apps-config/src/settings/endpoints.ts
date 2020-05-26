@@ -17,6 +17,11 @@ function createDev (t: (key: string, text: string, options: { ns: string }) => s
 function createLive (t: (key: string, text: string, options: { ns: string }) => string): Option[] {
   return [
     {
+      info: 'prochain',
+      text: t('prochain', 'Prochain Mainnet', { ns: 'apps-config' }),
+      value: 'wss://substrate.chain.pro/v2/ws/'
+    },
+    {
       info: 'kusama',
       text: t('rpc.kusama.parity', 'Kusama (Polkadot Canary, hosted by Parity)', { ns: 'apps-config' }),
       value: 'wss://kusama-rpc.polkadot.io/'

@@ -2976,6 +2976,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@polkadot/app-ads-management@workspace:packages/page-ads-management":
+  version: 0.0.0-use.local
+  resolution: "@polkadot/app-ads-management@workspace:packages/page-ads-management"
+  dependencies:
+    "@babel/runtime": ^7.9.6
+    "@polkadot/react-components": 0.42.0-beta.153
+  languageName: unknown
+  linkType: soft
+
 "@polkadot/app-claims@workspace:packages/page-claims":
   version: 0.0.0-use.local
   resolution: "@polkadot/app-claims@workspace:packages/page-claims"
@@ -3005,6 +3014,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@polkadot/app-create-did@workspace:packages/page-create-did":
+  version: 0.0.0-use.local
+  resolution: "@polkadot/app-create-did@workspace:packages/page-create-did"
+  dependencies:
+    "@babel/runtime": ^7.9.6
+    "@polkadot/react-components": 0.42.0-beta.153
+  languageName: unknown
+  linkType: soft
+
 "@polkadot/app-dashboard@workspace:packages/page-dashboard":
   version: 0.0.0-use.local
   resolution: "@polkadot/app-dashboard@workspace:packages/page-dashboard"
@@ -3022,6 +3040,15 @@ __metadata:
     "@babel/runtime": ^7.9.6
     "@polkadot/react-components": 0.42.0-beta.153
     "@polkadot/react-query": 0.42.0-beta.153
+  languageName: unknown
+  linkType: soft
+
+"@polkadot/app-did-transfer@workspace:packages/page-did-transfer":
+  version: 0.0.0-use.local
+  resolution: "@polkadot/app-did-transfer@workspace:packages/page-did-transfer"
+  dependencies:
+    "@babel/runtime": ^7.9.6
+    "@polkadot/react-components": 0.42.0-beta.153
   languageName: unknown
   linkType: soft
 
@@ -3072,6 +3099,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@polkadot/app-my-did@workspace:packages/page-my-did":
+  version: 0.0.0-use.local
+  resolution: "@polkadot/app-my-did@workspace:packages/page-my-did"
+  dependencies:
+    "@babel/runtime": ^7.9.6
+    "@polkadot/react-components": 0.42.0-beta.153
+  languageName: unknown
+  linkType: soft
+
 "@polkadot/app-parachains@workspace:packages/page-parachains":
   version: 0.0.0-use.local
   resolution: "@polkadot/app-parachains@workspace:packages/page-parachains"
@@ -3079,6 +3115,15 @@ __metadata:
     "@babel/runtime": ^7.9.6
     "@polkadot/react-components": 0.42.0-beta.153
     "@polkadot/react-query": 0.42.0-beta.153
+  languageName: unknown
+  linkType: soft
+
+"@polkadot/app-publish@workspace:packages/page-publish":
+  version: 0.0.0-use.local
+  resolution: "@polkadot/app-publish@workspace:packages/page-publish"
+  dependencies:
+    "@babel/runtime": ^7.9.6
+    "@polkadot/react-components": 0.42.0-beta.153
   languageName: unknown
   linkType: soft
 

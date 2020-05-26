@@ -27,13 +27,11 @@ function ChainImg ({ className, logo, onClick }: Props): React.ReactElement<Prop
     <img
       alt='chain logo'
       className={className}
-      onClick={onClick}
       src={img}
     />
   );
 }
 
 export default React.memo(styled(ChainImg)`
-  border-radius: 50%;
   box-sizing: border-box;
 `);

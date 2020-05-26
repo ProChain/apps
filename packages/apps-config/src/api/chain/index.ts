@@ -4,8 +4,10 @@
 
 import Arcadia from './arcadia';
 import Berlin from './berlin';
+import Prochain from './prochain'
 
 export default {
   'Arcadia Nodle Network': Arcadia,
-  Berlin
+  Berlin,
+  'Prochain Testnet': Prochain,
 };

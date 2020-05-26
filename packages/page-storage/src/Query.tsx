@@ -101,7 +101,6 @@ function getCachedComponent (query: QueryTypes): CacheInstance {
       } else {
         // render function to create an element for the query results which is plugged to the api
         renderHelper = withCallDiv('subscribe', {
-          paramName: 'params',
           paramValid: true,
           params: [key, ...values],
           withIndicator: true
@@ -111,6 +110,7 @@ function getCachedComponent (query: QueryTypes): CacheInstance {
       type = key.creator && key.creator.meta
         ? typeToString(key)
         : 'Raw';
+        
     }
 
     const defaultProps = { className: 'ui--output' };
@@ -170,7 +170,7 @@ function Query ({ className, onRemove, value }: Props): React.ReactElement<Props
     : isU8a(key)
       ? 'Raw'
       : typeToString(key as StorageEntryPromise);
-
+      
   if (!Component) {
     return null;
   }

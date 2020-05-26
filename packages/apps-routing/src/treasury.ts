@@ -10,6 +10,7 @@ export default function create (t: (key: string, text: string, options: { ns: st
   return {
     Component: Treasury,
     display: {
+      isHidden: false,
       needsApi: [
         'tx.treasury.proposeSpend'
       ]

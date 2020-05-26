@@ -16,7 +16,6 @@ import NetworkModal from '../modals/Network';
 import { useTranslation } from '../translate';
 import ChainInfo from './ChainInfo';
 import Item from './Item';
-import NodeInfo from './NodeInfo';
 
 interface Props {
   className?: string;
@@ -127,11 +126,6 @@ function SideBar ({ className, collapse, handleResize, isCollapsed, isMenuOpen, 
               </a>
             </Menu.Item>
             <Menu.Divider hidden />
-            {
-              isCollapsed
-                ? undefined
-                : <NodeInfo />
-            }
           </div>
           <Responsive
             className={`apps--SideBar-collapse ${isCollapsed ? 'collapsed' : 'expanded'}`}
@@ -168,7 +162,7 @@ export default React.memo(styled(SideBar)`
   }
 
   &.expanded {
-    width: 12rem;
+    width: 18rem;
   }
 
   .apps--SideBar {
@@ -220,6 +214,7 @@ export default React.memo(styled(SideBar)`
       padding: 0 !important;
       position: relative;
       width: inherit;
+      margin: 0!important;
 
       .text {
         padding-left: 0.5rem;

@@ -30,50 +30,60 @@ import techcomm from './techcomm';
 import toolbox from './toolbox';
 import transfer from './transfer';
 import treasury from './treasury';
+import publish from './publish';
+import myDid from './my-did';
+import createDid from './create-did';
+import didTransfer from './did-transfer';
+import adsManagement from './ads-management';
 
 export default function create (t: (key: string, text: string, options: { ns: string }) => string): Routes {
   return appSettings.uiMode === 'light'
     ? [
       // dashboard,
-      explorer(t),
+      // explorer(t),
       accounts(t),
-      claims(t),
+      // claims(t),
       transfer(t),
       genericAsset(t),
       null,
-      staking(t),
-      democracy(t),
-      council(t),
+      // staking(t),
+      // democracy(t),
+      // council(t),
       // TODO Not sure about the inclusion of treasury, parachains & society here
       null,
-      settings(t)
+      // settings(t)
     ]
     : [
       // dashboard(t),
-      explorer(t),
+      // explorer(t),
       accounts(t),
-      claims(t),
+      // claims(t),
       transfer(t),
-      genericAsset(t),
-      null,
-      staking(t),
-      democracy(t),
-      council(t),
-      treasury(t),
-      techcomm(t),
-      parachains(t),
-      society(t),
-      null,
-      contracts(t),
-      storage(t),
-      extrinsics(t),
-      sudo(t),
-      null,
-      settings(t),
-      toolbox(t),
-      js(t),
+      // genericAsset(t),
+      // null,
+      // staking(t),
+      // democracy(t),
+      // council(t),
+      // treasury(t),
+      // techcomm(t),
+      // parachains(t),
+      // society(t),
+      // null,
+      // contracts(t),
+      // storage(t),
+      // extrinsics(t),
+      // sudo(t),
+      // null,
+      // settings(t),
+      // toolbox(t),
+      // js(t),
       // hidden
-      template(t),
-      i18n(t)
+      // template(t),
+      myDid(t),
+      createDid(t),
+      didTransfer(t),
+      publish(t),
+      adsManagement(t)
+      // i18n(t)
     ];
 }

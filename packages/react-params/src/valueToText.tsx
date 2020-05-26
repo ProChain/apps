@@ -35,6 +35,7 @@ function formatKeys (keys: [ValidatorId, Keys][]): string {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function valueToText (type: string, value: any, swallowError = true, contentShorten = true): React.ReactNode {
+  
   if (isNull(value) || isUndefined(value)) {
     return div({}, '<unknown>');
   }

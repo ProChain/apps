@@ -12,6 +12,7 @@ import nodeNodle from './nodes/nodle.svg';
 import nodePolkadot from './nodes/polkadot-circle.svg';
 import nodePolkadotJs from './nodes/polkadot-js.svg';
 import nodeSubstrate from './nodes/substrate-hexagon.svg';
+import nodeProchain from './chains/prochain-logo-pc-en.png';
 
 // extensions
 import extensionPolkadotJs from './extensions/polkadot-js.svg';
@@ -24,7 +25,8 @@ const chainLogos: Record<string, any> = [
   ['Kusama', chainKusama], // new name after CC3
   ['Kusama CC1', chainKusama],
   ['Kusama CC2', chainKusama],
-  ['Kusama CC3', chainKusama]
+  ['Kusama CC3', chainKusama],
+  ['Prochain Testnet', nodeProchain]
 ].reduce((logos, [chain, logo]): Record<string, any> => ({
   ...logos,
   [chain.toLowerCase()]: logo

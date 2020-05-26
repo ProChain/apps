@@ -9,7 +9,6 @@ import styled from 'styled-components';
 import { ChainImg, Icon } from '@polkadot/react-components';
 import { useCall, useApi } from '@polkadot/react-hooks';
 import { BestNumber, Chain } from '@polkadot/react-query';
-
 import { useTranslation } from '../translate';
 
 interface Props {
@@ -24,8 +23,7 @@ function ChainInfo ({ className, onClick }: Props): React.ReactElement<Props> {
 
   return (
     <div
-      className={`apps--SideBar-logo ${className} ui--highlight--border`}
-      onClick={onClick}
+      className={`apps--SideBar-logo ${className}`}
     >
       <div className='apps--SideBar-logo-inner'>
         <ChainImg />
@@ -36,7 +34,6 @@ function ChainInfo ({ className, onClick }: Props): React.ReactElement<Props> {
           )}
           <BestNumber label='#' />
         </div>
-        <Icon name='dropdown' />
       </div>
     </div>
   );
@@ -57,8 +54,8 @@ export default React.memo(styled(ChainInfo)`
 
     img {
       flex: 0;
-      height: 2.75rem;
-      width: 2.75rem;
+      width: 10.75rem;
+      margin: 2rem 0 1rem;
     }
 
     .icon.dropdown,
@@ -75,6 +72,7 @@ export default React.memo(styled(ChainInfo)`
     }
 
     > div.info {
+      display: none;
       flex: 1;
       padding-right: 0.5rem;
 

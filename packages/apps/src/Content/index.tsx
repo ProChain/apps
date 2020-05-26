@@ -44,7 +44,6 @@ function Content ({ className }: Props): React.ReactElement<Props> {
     },
     [location, t]
   );
-
   return (
     <div className={className}>
       {needsApi && (!isApiReady || !isApiConnected)

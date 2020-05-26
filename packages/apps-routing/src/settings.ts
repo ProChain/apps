@@ -9,7 +9,9 @@ import Settings, { useCounter } from '@polkadot/app-settings';
 export default function create (t: (key: string, text: string, options: { ns: string }) => string): Route {
   return {
     Component: Settings,
-    display: {},
+    display: {
+      isHidden: true,
+    },
     icon: 'settings',
     name: 'settings',
     text: t('nav.settings', 'Settings', { ns: 'apps-routing' }),
