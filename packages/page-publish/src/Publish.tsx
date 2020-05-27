@@ -13,13 +13,15 @@ interface Props {
 }
 
 function Publish ({ className, accountId }: Props): React.ReactElement<Props> {
-  const [amount, setAmount] = useState<BN | undefined | null>(new BN(10**15));
+  const minDeposit = new BN(500).mul(new BN(10).pow(new BN(15)))
+  const defaultClick = new BN(1).mul(new BN(10).pow(new BN(15)))
   const [name, setName] = useState<string | null>(null);
   const [topic, setTopic] = useState<string | null>(null);
-  const [period, setPeriod] = useState<BN | undefined | null>(null);
-  const [singleClick, setSingleClick] = useState<BN | undefined | null>(new BN(10**15));
-  const [extraShare, setExtraShare] = useState<BN | undefined | null>(null);
-  
+  const [amount, setAmount] = useState<BN | undefined | null>(minDeposit);
+  const [singleClick, setSingleClick] = useState<BN | undefined | null>(defaultClick);
+  const [displayPage, setDisplayPage] = useState<string | null>(null);
+  const [landingPage, setLandingPage] = useState<string | null>(null);
+      
   return (
     <section className={className}>
       <div className='ui--row'>
@@ -45,13 +47,6 @@ function Publish ({ className, accountId }: Props): React.ReactElement<Props> {
             placeholder='请输入广告预期投放费用'
             value={amount}
           />
-          <Input
-            maxLength={50}
-            min={2}
-            onChange={setPeriod}
-            label='Ads Period'
-            placeholder='请输入广告投放周期'
-          />
           <InputBalance
             label='Single Click Fee'
             onChange={setSingleClick}
@@ -59,17 +54,25 @@ function Publish ({ className, accountId }: Props): React.ReactElement<Props> {
             value={singleClick}
           />
           <Input
+            maxLength={50}
+            min={2}
+            onChange={setDisplayPage}
+            label='Ads Image'
+            placeholder='请输入广告展示图'
+          />
+          <Input
             min={1}
-            onChange={setExtraShare}
-            label='Extra Share'
-            placeholder='请输入广告目标客户加成比例'
+            onChange={setLandingPage}
+            label='Ads Link'
+            placeholder='请输入广告跳转链接'
           />
           <Button.Group>
             <TxButton
               accountId={accountId}
+              isDisabled={!name || !topic || !amount || !singleClick || !displayPage}
               icon='send'
               label='make transfer'
-              params={[name, topic, amount, singleClick, period]}
+              params={[name, topic, amount, singleClick, displayPage, landingPage]}
               tx='ads.publish'
               withSpinner
             />

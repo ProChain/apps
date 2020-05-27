@@ -126,7 +126,7 @@ function inputToBn (input: string, si: SiDef | null, bitLength: BitLength, isZer
     result = new BN(input.replace(/[^\d]/g, ''))
       .mul(TEN.pow(siPower));
   }
-
+  
   return [
     result,
     isValidNumber(result, bitLength, isZeroable, maxValue)

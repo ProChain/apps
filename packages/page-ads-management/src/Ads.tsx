@@ -9,8 +9,9 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import store from 'store';
 import { useApi, useCall, didToHex } from '@polkadot/react-hooks';
-import { Balance } from '@polkadot/react-query';
-import { AdsMetadata } from './types';
+import { Button, TxButton } from '@polkadot/react-components';
+import { hexToString } from '@polkadot/util'
+import { Owned, AdsMetadata } from './types';
 
 interface Props {
   className?: string;
@@ -19,36 +20,87 @@ interface Props {
 
 function AdsMan ({ className, accountId }: Props): React.ReactElement<Props> {
   const { api } = useApi();
+  const [reload, setReload] = useState<boolean>(false);
+  const [records, setRecords] = useState<AdsMetadata[] | []>([]);
   const did = didToHex(store.get('did'));
-  const result = useCall<AdsMetadata>(api.query.ads.adsRecords, [did]);
-  const records = result && !result.isEmpty ? result.toHuman() : null
+  const result = useCall<Owned>(api.query.ads.ownedAds, [did]);
+  const _onSuccess = (): void => {
+    setReload(!reload)
+  };
+
+  useEffect(
+    (): void => {
+      if (result && !result.isEmpty) {
+        (async (): Promise<void> => {
+          const record: number[] = result.toJSON() as number[];
+          const records: any[] = []
+          for (let num of record) {
+            const data = await api.query.ads.adsRecords(num)
+            if (data) {
+              const tr: Object = data.toHuman();
+              
+              records.push({
+                ...tr,
+                id: num,
+              })
+            }
+          }
+          setRecords(records)
+        })();
+      }
+    },
+    [result, reload]
+  );
 
   return (
     <div className={className}>
-      <h3>我的资产</h3>
-      <Balance params={accountId} />
       <h3>我的广告</h3>
-      {records ? (
-        <>
-          <ul>
-            <li>广告主题: { records?.topic}</li>
-            <li>总投放费用: { records?.total_amount}</li>
-            <li>广告余额: { records?.surplus}</li>
-            <li>单次点击费用: { records?.single_click_fee}</li>
-            <li>创建时间： { records?.create_time}</li>
-            <li>投放周期： { records?.period}</li>
-          </ul>
-          <div>
-            <button className='ui primary button'>开始</button>
-            <button className='ui secondary button'>暂停</button>
-          </div>
-        </>
-      )
-      : 
-      (<div>
-        您还没有投放广告
-      </div>)
-    }
+      <ul className='ads-list'>
+        <li className='header'>
+          <span>广告名称</span>
+          <span>广告类型</span>
+          <span>总投放费用</span>
+          <span>已消耗费用</span>
+          <span>单次点击费用</span>
+          <span>操作</span>
+        </li>
+        {records.length > 0 && 
+          (records as  AdsMetadata[]).map((item, index): React.ReactNode => (
+            <li key={index} id={item.id}>
+              <span>{ hexToString(item.advertiser) }</span>
+              <span>{ hexToString(item.topic) }</span>
+              <span>{ item.total_amount }</span>
+              <span>{ item.spend_amount }</span>
+              <span>{ item.single_click_fee }</span>
+              <span>
+                <Button.Group>
+                  <TxButton
+                    accountId={accountId}
+                    isDisabled={!!item.active}
+                    label='开始'
+                    icon='play'
+                    params={[item.id]}
+                    tx='ads.active'
+                    withSpinner
+                    onSuccess={_onSuccess}
+                  />
+                  <TxButton
+                    className='cancel'
+                    isDisabled={!item.active}
+                    accountId={accountId}
+                    label='暂停'
+                    icon='pause'
+                    params={[item.id]}
+                    tx='ads.pause'
+                    withSpinner
+                    onSuccess={_onSuccess}
+                  />
+                </Button.Group>
+              </span>
+            </li>
+          ))}
+      </ul>
+      {records.length === 0 && <p className='empty'>您还没有发布广告</p>}
     </div>
   );
 }
@@ -60,11 +112,43 @@ export default React.memo(styled(AdsMan)`
   margin-top: 20px;
   ul {
     list-style-type: none;
-    margin: 10px;
+    margin: 10px 0;
     padding: 0;
+    overflow: hidden;
   }
   li {
     list-style-type: none;
-    line-height: 28px;
+  }
+  .ads-list {
+    text-align: center;
+    li {
+      height: 60px;
+      line-height: 60px;
+      border-top: 1px solid #eee;
+      &.header {
+        border: none;
+        background: #eee;
+      }
+    }
+    span {
+      float: left;
+      width:  13%;
+      &:nth-of-type(1) {
+        width: 20%;
+      }
+      &:nth-of-type(6) {
+        width: 28%;
+      }
+    }
+    .ui--Button-Group {
+      text-align: center;
+    }
+    .cancel {
+      background: #666!important;
+    }
+  }
+  p.empty {
+    text-align: center;
+    padding: 20px;
   }
 `);

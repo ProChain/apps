@@ -19,7 +19,7 @@ function createLive (t: (key: string, text: string, options: { ns: string }) => 
     {
       info: 'prochain',
       text: t('prochain', 'Prochain Mainnet', { ns: 'apps-config' }),
-      value: 'wss://substrate.chain.pro/v2/ws/'
+      value: 'wss://substrate.chain.pro/dev/ws'
     },
     {
       info: 'kusama',

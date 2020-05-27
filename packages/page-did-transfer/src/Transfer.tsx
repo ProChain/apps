@@ -14,9 +14,9 @@ interface Props {
 }
 
 function DidTransfer ({ className, accountId }: Props): React.ReactElement<Props> {
-  const [amount, setAmount] = useState<BN | undefined | null>(null);
+  const [amount, setAmount] = useState<BN | undefined | null>(new BN(10**15));
   const [did, setDid] = useState<string | null>(null);
-  const [memo, setMemo] = useState<string | null>('normal transfer');
+  const [memo, setMemo] = useState<string | null>(null);
   const _onDidChange = useCallback(
     (did: string): void => {
       const didHex = didToHex(did)
@@ -41,18 +41,19 @@ function DidTransfer ({ className, accountId }: Props): React.ReactElement<Props
           <InputBalance
             label='Amount to transfer'
             onChange={setAmount}
+            value={amount}
+            placeholder='请输入转账金额'
           />
           <Input
             maxLength={150}
-            min={1}
             onChange={setMemo}
             label='Memo'
-            value={memo}
-            placeholder='请输入备注'
+            placeholder='请输入转账备注'
           />
           <Button.Group>
             <TxButton
               accountId={accountId}
+              isDisabled={!amount || !did || !memo}
               icon='send'
               label='make transfer'
               params={[did, amount, memo]}

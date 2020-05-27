@@ -34,11 +34,13 @@ function UserCard ({ className, accountId }: Props): React.ReactElement<Props> {
           store.set('did', did);
         })
       } else {
+        store.set('did', '');
         setDid('')
       }
     },
     [result]
   );
+  
   return (
     <div className={className}>
       <h3>我的DID</h3>

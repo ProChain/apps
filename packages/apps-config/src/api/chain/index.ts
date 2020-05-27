@@ -10,4 +10,6 @@ export default {
   'Arcadia Nodle Network': Arcadia,
   Berlin,
   'Prochain Testnet': Prochain,
+  'Prochain Mainnet': Prochain,
+  'Development': Prochain,
 };

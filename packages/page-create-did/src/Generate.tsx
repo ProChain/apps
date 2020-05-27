@@ -2,9 +2,10 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { Button, Input, TxButton } from '@polkadot/react-components';
+import { encodeAddress } from '@polkadot/util-crypto';
 
 interface Props {
   className?: string;
@@ -14,7 +15,7 @@ interface Props {
 function Generate ({ className, accountId }: Props): React.ReactElement<Props> {
   const [pubkey, setPubkey] = useState<string | null>(null);
   const didType = '4';
-
+  
   return (
     <section className={className}>
       <div className='ui--row'>
@@ -22,10 +23,9 @@ function Generate ({ className, accountId }: Props): React.ReactElement<Props> {
           <h2>创建DID</h2>
           <Input
             maxLength={50}
-            min={20}
             onChange={setPubkey}
-            label='Public key'
-            placeholder='请输入您的公钥'
+            label='Public key or Address'
+            placeholder='请输入您的公钥或地址'
           />
           <Input
             maxLength={50}
@@ -33,11 +33,11 @@ function Generate ({ className, accountId }: Props): React.ReactElement<Props> {
             onChange={setPubkey}
             label='Did Type'
             value='应用'
-            isDisabled={true}
           />
           <Button.Group>
             <TxButton
               accountId={accountId}
+              isDisabled={!pubkey}
               icon='send'
               label='确认创建'
               params={[pubkey, pubkey, didType, '', null, null]}

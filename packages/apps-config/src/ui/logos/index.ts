@@ -26,7 +26,9 @@ const chainLogos: Record<string, any> = [
   ['Kusama CC1', chainKusama],
   ['Kusama CC2', chainKusama],
   ['Kusama CC3', chainKusama],
-  ['Prochain Testnet', nodeProchain]
+  ['Prochain Testnet', nodeProchain],
+  ['Prochain Mainnet', nodeProchain],
+  ['Development', nodeProchain]
 ].reduce((logos, [chain, logo]): Record<string, any> => ({
   ...logos,
   [chain.toLowerCase()]: logo
