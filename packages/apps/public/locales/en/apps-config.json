@@ -1,5 +1,6 @@
 {
   "lng.detect": "Default browser language (auto-detect)",
+  "prochain": "Prochain Mainnet",
   "rpc.arcadia": "Arcadia (Nodle Testnet, hosted by Nodle)",
   "rpc.berlin": "Berlin (Edgeware Testnet, hosted by Commonwealth Labs)",
   "rpc.custom": "Custom environment",
