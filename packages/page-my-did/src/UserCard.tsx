@@ -6,6 +6,7 @@
 /* eslint-disable react/jsx-max-props-per-line */
 
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import store from 'store';
 import { useApi, useCall } from '@polkadot/react-hooks';
@@ -45,7 +46,12 @@ function UserCard ({ className, accountId }: Props): React.ReactElement<Props> {
     <div className={className}>
       <h3>我的DID</h3>
       { did ? did : (<div>
-        您还没有DID，请先点击左侧标签创建
+        您还没有DID，<NavLink
+            data-for={`nav-${name}`}
+            to='/create-did'
+          >
+            点击创建
+          </NavLink>
       </div>) }
       <h3>我的资产</h3>
       <Balance params={accountId} />

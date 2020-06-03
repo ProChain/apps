@@ -57,6 +57,7 @@ function AdsMan ({ className, accountId }: Props): React.ReactElement<Props> {
       <h3>我的广告</h3>
       <ul className='ads-list'>
         <li className='header'>
+          <span>广告ID</span>
           <span>广告名称</span>
           <span>广告类型</span>
           <span>总投放费用</span>
@@ -67,6 +68,7 @@ function AdsMan ({ className, accountId }: Props): React.ReactElement<Props> {
         {records.length > 0 && 
           (records as  AdsMetadata[]).map((item, index): React.ReactNode => (
             <li key={index} id={item.id}>
+              <span>{ item.id }</span>
               <span>{ hexToString(item.advertiser) }</span>
               <span>{ hexToString(item.topic) }</span>
               <span>{ item.total_amount }</span>
@@ -132,12 +134,15 @@ export default React.memo(styled(AdsMan)`
     }
     span {
       float: left;
-      width:  13%;
+      width:  12%;
       &:nth-of-type(1) {
+        width: 5%;
+      }
+      &:nth-of-type(2) {
         width: 20%;
       }
-      &:nth-of-type(6) {
-        width: 28%;
+      &:nth-of-type(7) {
+        width: 27%;
       }
     }
     .ui--Button-Group {

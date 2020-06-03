@@ -54,7 +54,7 @@ function Publish ({ className, accountId }: Props): React.ReactElement<Props> {
             value={singleClick}
           />
           <Input
-            maxLength={50}
+            maxLength={350}
             min={2}
             onChange={setDisplayPage}
             label='Ads Image'
@@ -71,7 +71,7 @@ function Publish ({ className, accountId }: Props): React.ReactElement<Props> {
               accountId={accountId}
               isDisabled={!name || !topic || !amount || !singleClick || !displayPage}
               icon='send'
-              label='make transfer'
+              label='确认'
               params={[name, topic, amount, singleClick, displayPage, landingPage]}
               tx='ads.publish'
               withSpinner
