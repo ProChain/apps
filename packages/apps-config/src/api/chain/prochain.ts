@@ -42,6 +42,12 @@ export default {
   },
   ActiveIndex: "u64",
   AdIndex: "u64",
+  DistributeType: {
+    _enum: [
+      "ADVERTISER",
+      "AGENT"
+    ]
+  },
   AdsMetadata: {
     advertiser: "Vec<u8>",
     topic: "Vec<u8>",
@@ -51,7 +57,8 @@ export default {
     display_page: "Vec<u8>",
     landing_page: "Option<Vec<u8>>",
     create_time: "Moment",
-    active: "Option<ActiveIndex>"
+    active: "Option<ActiveIndex>",
+    distribute_type: "DistributeType"
   },
   EventHTLC: {
     eth_contract_addr: "Vec<u8>",

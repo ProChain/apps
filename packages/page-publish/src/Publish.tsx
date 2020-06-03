@@ -4,12 +4,17 @@
 
 import BN from 'bn.js';
 import React, { useState } from 'react';
-import { Button, Input, InputBalance, TxButton } from '@polkadot/react-components';
+import { Button, Dropdown, Input, InputBalance, TxButton } from '@polkadot/react-components';
 import styled from 'styled-components';
 
 interface Props {
   className?: string;
   accountId?: string | null;
+}
+
+enum DistributeType {
+  ADVERTISER,
+  AGENT
 }
 
 function Publish ({ className, accountId }: Props): React.ReactElement<Props> {
@@ -21,7 +26,12 @@ function Publish ({ className, accountId }: Props): React.ReactElement<Props> {
   const [singleClick, setSingleClick] = useState<BN | undefined | null>(defaultClick);
   const [displayPage, setDisplayPage] = useState<string | null>(null);
   const [landingPage, setLandingPage] = useState<string | null>(null);
-      
+  const [adsType, setAdsType] = useState<DistributeType>(DistributeType.AGENT);
+  const DISTRIBUTE_ENUM = [
+    { text: 'ADVERTISER', value: DistributeType.ADVERTISER },
+    { text: 'AGENT', value: DistributeType.AGENT },
+  ];
+
   return (
     <section className={className}>
       <div className='ui--row'>
@@ -66,13 +76,19 @@ function Publish ({ className, accountId }: Props): React.ReactElement<Props> {
             label='Ads Link'
             placeholder='请输入广告跳转链接'
           />
+          <Dropdown
+            label='广告类型'
+            onChange={setAdsType}
+            options={DISTRIBUTE_ENUM}
+            value={adsType}
+          />
           <Button.Group>
             <TxButton
               accountId={accountId}
               isDisabled={!name || !topic || !amount || !singleClick || !displayPage}
               icon='send'
               label='确认'
-              params={[name, topic, amount, singleClick, displayPage, landingPage]}
+              params={[name, topic, amount, singleClick, displayPage, landingPage, adsType]}
               tx='ads.publish'
               withSpinner
             />
