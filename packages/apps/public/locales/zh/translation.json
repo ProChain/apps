@@ -291,6 +291,8 @@
   "nav.dashboard": "仪表盘",
   "nav.democracy": "民主权利",
   "nav.did-transfer": "DID转账",
+  "nav.funds": "抵押&赎回",
+  "nav.team": "团队管理",
   "nav.explorer": "浏览",
   "nav.extrinsics": "交易",
   "nav.generic-asset": "通用资产",

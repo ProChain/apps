@@ -3081,6 +3081,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@polkadot/app-funds@workspace:packages/page-funds":
+  version: 0.0.0-use.local
+  resolution: "@polkadot/app-funds@workspace:packages/page-funds"
+  dependencies:
+    "@babel/runtime": ^7.9.6
+    "@polkadot/react-components": 0.42.0-beta.153
+  languageName: unknown
+  linkType: soft
+
 "@polkadot/app-generic-asset@workspace:packages/page-generic-asset":
   version: 0.0.0-use.local
   resolution: "@polkadot/app-generic-asset@workspace:packages/page-generic-asset"
@@ -3181,6 +3190,15 @@ __metadata:
 "@polkadot/app-sudo@workspace:packages/page-sudo":
   version: 0.0.0-use.local
   resolution: "@polkadot/app-sudo@workspace:packages/page-sudo"
+  dependencies:
+    "@babel/runtime": ^7.9.6
+    "@polkadot/react-components": 0.42.0-beta.153
+  languageName: unknown
+  linkType: soft
+
+"@polkadot/app-team@workspace:packages/page-team":
+  version: 0.0.0-use.local
+  resolution: "@polkadot/app-team@workspace:packages/page-team"
   dependencies:
     "@babel/runtime": ^7.9.6
     "@polkadot/react-components": 0.42.0-beta.153

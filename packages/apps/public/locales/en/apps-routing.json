@@ -9,6 +9,8 @@
   "nav.dashboard": "Dashboard",
   "nav.democracy": "Democracy",
   "nav.did-transfer": "Transfer",
+  "nav.funds": "Lock & Unlock",
+  "nav.team": "Team",
   "nav.explorer": "Explorer",
   "nav.extrinsics": "Extrinsics",
   "nav.generic-asset": "Generic asset",

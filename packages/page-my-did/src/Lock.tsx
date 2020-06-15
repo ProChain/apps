@@ -13,7 +13,7 @@ interface Props {
   accountId?: string | null;
 }
 
-function DidTransfer ({ className, accountId }: Props): React.ReactElement<Props> {
+function LockFunds ({ className, accountId }: Props): React.ReactElement<Props> {
   const [amount, setAmount] = useState<BN | undefined | null>(new BN(10**15));
   const [did, setDid] = useState<string | null>(null);
   const [memo, setMemo] = useState<string | null>(null);
@@ -30,7 +30,7 @@ function DidTransfer ({ className, accountId }: Props): React.ReactElement<Props
     <section className={className}>
       <div className='ui--row'>
         <div className='large'>
-          <h2>转账</h2>
+          <h2>抵押</h2>
           <Input
             maxLength={50}
             min={20}
@@ -55,7 +55,7 @@ function DidTransfer ({ className, accountId }: Props): React.ReactElement<Props
               accountId={accountId}
               isDisabled={!amount || !did || !memo}
               icon='send'
-              label='确认'
+              label='make transfer'
               params={[did, amount, memo]}
               tx='did.transfer'
               withSpinner
@@ -67,15 +67,9 @@ function DidTransfer ({ className, accountId }: Props): React.ReactElement<Props
   );
 }
 
-export default React.memo(styled(DidTransfer)`
-  padding: 50px;
+export default React.memo(styled(LockFunds)`
   background: #fff;
-  width: 60%;
   border-radius: 15px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   .ui--row {
     justify-content: center;
     h2 {

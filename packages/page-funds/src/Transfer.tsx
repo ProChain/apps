@@ -13,7 +13,7 @@ interface Props {
   accountId?: string | null;
 }
 
-function DidTransfer ({ className, accountId }: Props): React.ReactElement<Props> {
+function Funds ({ className, accountId }: Props): React.ReactElement<Props> {
   const [amount, setAmount] = useState<BN | undefined | null>(new BN(10**15));
   const [did, setDid] = useState<string | null>(null);
   const [memo, setMemo] = useState<string | null>(null);
@@ -67,7 +67,7 @@ function DidTransfer ({ className, accountId }: Props): React.ReactElement<Props
   );
 }
 
-export default React.memo(styled(DidTransfer)`
+export default React.memo(styled(Funds)`
   padding: 50px;
   background: #fff;
   width: 60%;

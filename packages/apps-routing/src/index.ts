@@ -8,30 +8,32 @@ import appSettings from '@polkadot/ui-settings';
 
 // When adding here, also ensure to add to Dummy.tsx
 
-import template from './123code';
+// import template from './123code';
 import accounts from './accounts';
-import claims from './claims';
-import contracts from './contracts';
-import council from './council';
+// import claims from './claims';
+// import contracts from './contracts';
+// import council from './council';
 // import dashboard from './dashboard';
-import democracy from './democracy';
-import explorer from './explorer';
-import extrinsics from './extrinsics';
+// import democracy from './democracy';
+// import explorer from './explorer';
+// import extrinsics from './extrinsics';
 import genericAsset from './generic-asset';
-import i18n from './i18n';
-import js from './js';
-import parachains from './parachains';
-import settings from './settings';
-import society from './society';
-import staking from './staking';
-import storage from './storage';
-import sudo from './sudo';
-import techcomm from './techcomm';
-import toolbox from './toolbox';
+// import i18n from './i18n';
+// import js from './js';
+// import parachains from './parachains';
+// import settings from './settings';
+// import society from './society';
+// import staking from './staking';
+// import storage from './storage';
+// import sudo from './sudo';
+// import techcomm from './techcomm';
+// import toolbox from './toolbox';
 import transfer from './transfer';
-import treasury from './treasury';
+// import treasury from './treasury';
 import publish from './publish';
 import myDid from './my-did';
+import team from './team';
+import funds from './funds';
 import createDid from './create-did';
 import didTransfer from './did-transfer';
 import adsManagement from './ads-management';
@@ -82,6 +84,8 @@ export default function create (t: (key: string, text: string, options: { ns: st
       myDid(t),
       createDid(t),
       didTransfer(t),
+      funds(t),
+      team(t),
       publish(t),
       adsManagement(t)
       // i18n(t)

@@ -46,6 +46,7 @@ i18n
       'app-publish',
       'app-create-did',
       'app-did-transfer',
+      'app-team',
       'app-ads-management',
       'app-accounts',
       'app-claims',
