@@ -23,6 +23,7 @@ function UserCard ({ className, accountId }: Props): React.ReactElement<Props> {
   const { api } = useApi();
   const [did, setDid] = useState<string>('');
   const result = useCall<MyDid>(api.query.did.identity, [accountId]);
+  const [metadata, setMetadata] =  useState<MetadataRecord | null>(null);
 
   useEffect(
     (): void => {
@@ -33,10 +34,14 @@ function UserCard ({ className, accountId }: Props): React.ReactElement<Props> {
           const did = hexToDid(metadata['did']);
           setDid(did);
           store.set('did', did);
+          setMetadata(metadata);
+          store.set('userDocs', metadata);
         })
       } else {
         store.set('did', '');
         setDid('')
+        setMetadata(null);
+        store.set('userDocs', null);
       }
     },
     [result]
@@ -55,6 +60,8 @@ function UserCard ({ className, accountId }: Props): React.ReactElement<Props> {
       </div>) }
       <h3>我的资产</h3>
       <Balance params={accountId} />
+      <h3>我的抵押</h3>
+      {metadata?.locked_records ? metadata.locked_records.locked_funds : '0.000 PRM'}
     </div>
   );
 }

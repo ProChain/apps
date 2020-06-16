@@ -11,7 +11,8 @@ import React, { useState } from 'react';
 import { lastAccount } from '@polkadot/react-hooks';
 
 // local imports and components
-import Transfer from './Transfer';
+import Lock from './Lock';
+import Unlock from './Unlock';
 
 function FundsApp ({ className }: Props): React.ReactElement<Props> {
   const accountId = lastAccount();
@@ -20,7 +21,8 @@ function FundsApp ({ className }: Props): React.ReactElement<Props> {
     // in all apps, the main wrapper is setup to allow the padding
     // and margins inside the application. (Just from a consistent pov)
     <main className={className}>
-      <Transfer accountId={accountId} />
+      <Lock accountId={accountId} />
+      <Unlock accountId={accountId} />
     </main>
   );
 }

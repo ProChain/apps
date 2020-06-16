@@ -6,58 +6,34 @@ import BN from 'bn.js';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Button, InputBalance, Input, TxButton } from '@polkadot/react-components';
-import { didToHex } from './util'
 
 interface Props {
   className?: string;
   accountId?: string | null;
 }
 
-function LockFunds ({ className, accountId }: Props): React.ReactElement<Props> {
+function Unlock ({ className, accountId }: Props): React.ReactElement<Props> {
   const [amount, setAmount] = useState<BN | undefined | null>(new BN(10**15));
-  const [did, setDid] = useState<string | null>(null);
-  const [memo, setMemo] = useState<string | null>(null);
-  const _onDidChange = useCallback(
-    (did: string): void => {
-      const didHex = didToHex(did)
-      console.log(didHex, 'did hex----');
-      setDid(didHex)
-    },
-    []
-  );
 
   return (
     <section className={className}>
       <div className='ui--row'>
         <div className='large'>
-          <h2>抵押</h2>
-          <Input
-            maxLength={50}
-            min={20}
-            onChange={_onDidChange}
-            label='Recipient DID'
-            placeholder='请输入收款人的DID'
-          />
+          <h2>赎回</h2>
           <InputBalance
-            label='Amount to transfer'
+            label='Amount to Unlock'
             onChange={setAmount}
             value={amount}
-            placeholder='请输入转账金额'
-          />
-          <Input
-            maxLength={150}
-            onChange={setMemo}
-            label='Memo'
-            placeholder='请输入转账备注'
+            placeholder='请输入赎回金额'
           />
           <Button.Group>
             <TxButton
               accountId={accountId}
-              isDisabled={!amount || !did || !memo}
+              isDisabled={!amount}
               icon='send'
-              label='make transfer'
-              params={[did, amount, memo]}
-              tx='did.transfer'
+              label='确认'
+              params={[amount]}
+              tx='did.unlock'
               withSpinner
             />
           </Button.Group>
@@ -67,13 +43,22 @@ function LockFunds ({ className, accountId }: Props): React.ReactElement<Props> 
   );
 }
 
-export default React.memo(styled(LockFunds)`
+export default React.memo(styled(Unlock)`
   background: #fff;
+  width: 60%;
+  margin: 50px auto;
   border-radius: 15px;
   .ui--row {
     justify-content: center;
+    padding: 30px;
     h2 {
-      padding-left: 2rem;
+      padding-left: 0;
+    }
+    .eqpzXe {
+      padding-left: 0;
+      label {
+        left: 1.5rem;
+      }
     }
     div.large {
       flex: 0 100%;

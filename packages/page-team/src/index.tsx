@@ -8,20 +8,17 @@ import { AppProps as Props } from '@polkadot/react-components/types';
 // external imports (including those found in the packages/*
 // of this repo)
 import React, { useState } from 'react';
-
-// local imports and components
-import AccountSelector from './AccountSelector';
-import UserCard from './UserCard';
+import { lastAccount } from '@polkadot/react-hooks';
+import Partner from './Partner';
 
 function Team ({ className }: Props): React.ReactElement<Props> {
-  const [accountId, setAccountId] = useState<string | null>(null);
+  const accountId = lastAccount();
   
   return (
     // in all apps, the main wrapper is setup to allow the padding
     // and margins inside the application. (Just from a consistent pov)
     <main className={className}>
-      <AccountSelector onChange={setAccountId} />
-      <UserCard accountId={accountId} />
+      <Partner accountId={accountId} />
     </main>
   );
 }

@@ -13,11 +13,11 @@ export default function funds (t: (key: string, text: string, options: { ns: str
       isHidden: false,
       needsAccounts: true,
       needsApi: [
-        'query.did.metadata',
-        'query.did.identity'
+        'tx.did.lock',
+        'tx.did.unlock'
       ]
     },
-    icon: 'user md',
+    icon: 'money',
     name: 'funds',
     text: t('nav.funds', 'Lock & Unlock', { ns: 'apps-routing' })
   };

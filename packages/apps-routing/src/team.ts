@@ -17,7 +17,7 @@ export default function team (t: (key: string, text: string, options: { ns: stri
         'query.did.identity'
       ]
     },
-    icon: 'user md',
+    icon: 'address card',
     name: 'team',
     text: t('nav.team', 'Team', { ns: 'apps-routing' })
   };
