@@ -2,10 +2,11 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { Button, Input, TxButton } from '@polkadot/react-components';
-import { encodeAddress } from '@polkadot/util-crypto';
+import { decodeAddress } from '@polkadot/util-crypto';
+import { u8aToHex } from '@polkadot/util';
 
 interface Props {
   className?: string;
@@ -13,9 +14,17 @@ interface Props {
 }
 
 function Generate ({ className, accountId }: Props): React.ReactElement<Props> {
-  const [pubkey, setPubkey] = useState<string | null>(null);
+  const [address, setAddress] = useState<string | null>(null);
+  const [pubkey, setPubkey] = useState<string>('');
   const didType = '4';
-  
+  const _onChange = useCallback(
+    (address: string): void => {
+      const pubkey = u8aToHex(decodeAddress(address))
+      setAddress(address)
+      setPubkey(pubkey)
+    },
+    [],
+  )
   return (
     <section className={className}>
       <div className='ui--row'>
@@ -23,9 +32,16 @@ function Generate ({ className, accountId }: Props): React.ReactElement<Props> {
           <h2>创建DID</h2>
           <Input
             maxLength={150}
-            onChange={setPubkey}
-            label='Public key or Address'
-            placeholder='请输入您的公钥或地址'
+            onChange={_onChange}
+            label='Your Address'
+            placeholder='请输入您的账户地址'
+          />
+          <Input
+            maxLength={150}
+            isDisabled={true}
+            label='Your Public Key'
+            value={pubkey}
+            placeholder='您的公钥'
           />
           <Input
             maxLength={50}
@@ -39,7 +55,7 @@ function Generate ({ className, accountId }: Props): React.ReactElement<Props> {
               isDisabled={!pubkey}
               icon='send'
               label='确认创建'
-              params={[pubkey, pubkey, didType, '', null, null]}
+              params={[pubkey, address, didType, '', null, null]}
               tx='did.create'
               withSpinner
             />
