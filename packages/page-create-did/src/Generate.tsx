@@ -22,14 +22,13 @@ function Generate ({ className, accountId }: Props): React.ReactElement<Props> {
         <div className='large'>
           <h2>创建DID</h2>
           <Input
-            maxLength={50}
+            maxLength={150}
             onChange={setPubkey}
             label='Public key or Address'
             placeholder='请输入您的公钥或地址'
           />
           <Input
             maxLength={50}
-            min={20}
             onChange={setPubkey}
             label='Did Type'
             value='应用'
